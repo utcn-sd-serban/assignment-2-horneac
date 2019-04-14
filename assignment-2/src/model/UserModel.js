@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 
-class Model extends EventEmitter {
+class UserModel extends EventEmitter {
     constructor() {
         super();
         this.state = {
@@ -22,8 +22,11 @@ class Model extends EventEmitter {
             newUser: {
                 userName:"",
                 password:""
+            },
+            currentUser:{
+                userName:""
             }
-
+           
         };
     }
 
@@ -49,8 +52,17 @@ class Model extends EventEmitter {
         this.emit("change", this.state);
     }
 
+    changeCurrentUserProperty(property, value){
+        this.state = {
+            ...this.state,
+            currentUser: {
+                ...this.state.currentUser,
+            [property] :value            }
+        }
+    }
+
 }
 
-const model = new Model()
+const model = new UserModel()
 
 export default model;
