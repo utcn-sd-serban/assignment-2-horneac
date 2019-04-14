@@ -13,6 +13,9 @@ export default class SmartQuestionList extends Component{
     constructor(){
         super();
         this.state = mapModelStateToComponentState(questionModel.state);
+        this.state.questions.sort( (q1, q2) => (
+            q1.creation_date_time < q2.creation_date_time ? 1 : q1.creation_date_time > q2.creation_date_time ? -1 : 0
+        ))
         this.listener = modelState => this.setState(mapModelStateToComponentState(modelState));
         questionModel.addListener("change",this.listener);
 
