@@ -11,8 +11,16 @@ class UsersListPresenter {
         model.changeNewUserProperty(property, value);
     }
     onLogin() {
-        model.changeCurrentUserProperty("username",model.state.newUser.userName);
-        window.location.assign("#/questions");
+        //eval('debugger');
+        for(let index = 0; index < model.state.users.length; index++) {
+            if(model.state.users[index].userName === model.state.newUser.userName) {
+                if(model.state.users[index].password === model.state.newUser.password) {
+                    model.changeCurrentUserProperty("userName",model.state.newUser.userName);
+                    window.location.assign("#/questions");
+                }
+            }
+        }
+        
     }
 }
 

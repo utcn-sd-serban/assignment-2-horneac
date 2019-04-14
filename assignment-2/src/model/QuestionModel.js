@@ -9,58 +9,86 @@ class QuestionModel extends EventEmitter{
                 title: "title1",
                 text: "text1",
                 author: "John",
-                creation_date_time: 2019
+                creation_date_time: 2019,
+                tags: ["first", "tag"]
             }, {
                 id: 2,
                 title: "title2",
                 text: "text2",
                 author: "Jack",
-                creation_date_time: 2018
+                creation_date_time: 2018,
+                tags: ["second", "tag"]
             }],
             newQuestion: {
                 title: "",
                 text: "",
-                author: "",
-                tags: []
+                tags: ""
             },
             searchTagOrTitle: "",
-            id: 2
+            currentId: 3
         };
     }
 
-    addQuestion(title,text, author){
+    addQuestion(title,text, author, tags){
+        let tagsArray = tags.split(" ");
         this.state = {
             ...this.state,
             questions: this.state.questions.concat([{
-                id: this.state.id,
+                id: this.state.currentId,
                 title: title,
                 text: text,
                 author: author,
-                creation_date_time: 2019
+                creation_date_time: 2019,
+                tags: tagsArray
             }]),
-            id: this.state.id+1
+            currentId: this.state.currentId+1
         };
         
         this.emit("change",this.state);
+    }
+    removeQuestion(index) {
+        this.state = {
+            ...this.state
+        }
+        this.state.questions.splice(index,1);
+        this.emit("change", this.state);
     }
 
     changeNewQuestionProperty(property, value)  {
         this.state = {
             ...this.state,
             newQuestion: {
-                
-                ...this.newQuestion,
+                ...this.state.newQuestion,
                 [property] : value
             }
         };
         this.emit("change",this.state);
     }
 
+    filter(filterFun) {
+        this.state = {
+            ...this.state,
+            questions: this.state.questions.filter(filterFun)
+            
+        }
+        console.log(this.state.questions);
+        this.emit("change",this.state);
+    }
+
+    updateQuestions(questions) {
+        this.state = {
+            ...this.state,
+            questions: questions
+        }
+        this.emit("change", this.state);
+    }
+
     changeTitleOrTagSearch(tagOrTitle) {
-        this.stat = {
+        this.state = {
             ...this.state,
             searchTagOrTitle: tagOrTitle
         }
+        console.log("new search criteria:" + this.state.searchTagOrTitle);
         this.emit("change",this.state);
     }
 

@@ -28,6 +28,8 @@ export default class SmartQuestionList extends Component{
             onSearchBarChange={questionListPresenter.onSearchBarChange}
             onChangeNewQuestionProperty={questionListPresenter.onChangeNewQuestionProperty}
             onClickNewQuestion={questionListPresenter.onCreate}
+            onSearchTitle={questionListPresenter.onClickSearchTitle}
+            onSearchTag={questionListPresenter.onClickSearchTag}
             questions={this.state.questions}
             onLogOut={questionListPresenter.onLogOut}
             newQuestion={this.state.newQuestion}/>

@@ -10,7 +10,7 @@ const UserList = ({users, title, onCreate, onChange,
             <input value={newUserName} onChange={ e => onChange("userName", e.target.value)}/>
             <br />
             <label> password:</label>
-            <input value={newUserPassword} onChange={ e => onChange("password", e.target.value)}/>
+            <input value={newUserPassword} type="password" onChange={ e => onChange("password", e.target.value)}/>
             <br />
             <div className="buttons">
                 <button className="button is-primary" onClick={onCreate}>Register!</button>
@@ -22,15 +22,15 @@ const UserList = ({users, title, onCreate, onChange,
             <thead>
                 <tr>
                     <th>User Name</th>
-                    <th>password</th>
+                    <th>type</th>
                 </tr>
             </thead>
             <tbody>
                 {
                     users.map((user,index) => (
-                        <tr key = {user.id}>
+                        <tr key = {index}>
                             <td>{user.userName}</td>
-                            <td>{ user.password}</td>
+                            <td>{ user.type}</td>
                         </tr>
                     ))
                 }

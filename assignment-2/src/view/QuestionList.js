@@ -16,7 +16,7 @@ const QuestionList = ({questions,onSearchTitle, newQuestion,
             <div className="level-item">
             <div className="field has-addons">
                 <p className="control">
-                <input className="input" placeholder="Find a question" value={tagOrTitle} onChange={e => onSearchBarChange(e.target.value)}/>
+                <input className="input" value={tagOrTitle} onChange={e => onSearchBarChange(e.target.value)}/>
                 </p>
                 <p className="control">
                 <button className="button" onClick={onSearchTitle}>
@@ -42,21 +42,21 @@ const QuestionList = ({questions,onSearchTitle, newQuestion,
                         </button>
                     </div>
                     <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                        <div className="dropdown-content">
+                        <div className="dropdown-content" allign="left">
                         <label >Title</label>
                         <input value={newQuestion.title} onChange={e => onChangeNewQuestionProperty("title", e.target.value)}></input>
                         <label>Text</label>
                         <textarea className="textarea" value={newQuestion.text} onChange={e => onChangeNewQuestionProperty("text", e.target.value)}/>
                         <label>Tags</label>
-                        <input></input>
+                        <input  type="tags" value={newQuestion.tags} onChange={e => onChangeNewQuestionProperty("tags", e.target.value)} ></input>
                         <hr className="dropdown-divider"/>
                         <button className="button" onClick={onClickNewQuestion}> Post</button>
                         </div>
                     </div>
             </div>
            
-            <p className="level-item"><button className="button" onClick={onLogOut}>Log out</button></p>
-            
+            <p className="level-item"> <button className="button" onClick={onLogOut}>     Log out</button></p>
+            <p calssName="level-item"> <span/><span/></p>
             
             {/* <div className="dropdown">
                 <p className="level-item"><button className="button is-success" onClick={onClickNewQuestion}>New</button></p>
@@ -69,7 +69,7 @@ const QuestionList = ({questions,onSearchTitle, newQuestion,
             <div className="tile is-12 is-vertical is-parent">
                 {
                     questions.map( (question, index) => (
-                        <div className="tile is-child box">
+                        <div className="tile is-child box" key={question.id}>
                             <p className="title">{question.title}</p>
                             <p className="subtitle light">author: {question.author}</p>
                             
