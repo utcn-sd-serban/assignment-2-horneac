@@ -49,6 +49,7 @@ class QuestionListPresenter {
     }
 
     onLogOut() {
+        model.changeCurrentUserProperty("userName", "");
         window.location.assign("/");
     }
 }
