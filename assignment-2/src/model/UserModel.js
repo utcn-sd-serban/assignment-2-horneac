@@ -62,13 +62,13 @@ class UserModel extends EventEmitter {
     }
 
     login(){
-        for(let index = 0; index < this.state.users.length; index++) {
-            if(this.state.users[index].userName === this.state.newUser.userName) {
-                if(this.state.users[index].password === this.state.newUser.password) {
-                    this.changeCurrentUserProperty("userName",this.state.newUser.userName);
-                }
-            }
-        }
+        // for(let index = 0; index < this.state.users.length; index++) {
+        //     if(this.state.users[index].userName === this.state.newUser.userName) {
+        //         if(this.state.users[index].password === this.state.newUser.password) {
+        //             this.changeCurrentUserProperty("userName",this.state.newUser.userName);
+        //         }
+        //     }
+        // }
     }
 
 }

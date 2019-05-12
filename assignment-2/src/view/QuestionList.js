@@ -1,10 +1,20 @@
 import React from "react"
 import QuestionSearchBar from "./question/QuestionSearchBar";
 import QuestionButtons from "./question/QuestionButtons";
+import QuestionTile from "./question/QuestionTile";
 
 const QuestionList = ({questions,onSearchTitle, newQuestion, 
-    onChangeNewQuestionProperty, onLogOut,
+    onChangeNewQuestionProperty, onLogOut, onClick,
     onSearchTag, tagOrTitle, onSearchBarChange, onClickNewQuestion}) => (
+        // <head>
+        //     <style>
+        //         QuestionTile:hover {
+        //         background-color: yellow;
+        //         }
+        //     </style>
+        // </head>
+        //                                          why is this not working
+        
     <div className="hero-primary">
         {/* <!-- Main container --> */}
         <nav className="level">
@@ -21,22 +31,16 @@ const QuestionList = ({questions,onSearchTitle, newQuestion,
                             onLogOut={onLogOut}
                             onClickNewQuestion={onClickNewQuestion} />
         
-            {/* <div className="dropdown">
-                <p className="level-item"><button className="button is-success" onClick={onClickNewQuestion}>New</button></p>
-            </div> */}
+           
             
         </nav>
         <h2 className="title primary"> Questions </h2>
         <div className="tile is-ancestor">
             <div className="tile is-12 is-vertical is-parent">
                 {
-                    questions.map( (question, index) => (
-                        <div className="tile is-child box" key={question.id}>
-                            <p className="title">{question.title}</p>
-                            <p className="subtitle light">author: {question.author}</p>
-                            
-                            <p>{question.text}</p>
-                        </div>
+                    questions.map( (question) => (
+                        <QuestionTile question={question}
+                                      onClick={onClick} />
                             
                     ))
                 }

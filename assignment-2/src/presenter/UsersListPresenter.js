@@ -13,9 +13,9 @@ class UsersListPresenter {
     onLogin() {
         //eval('debugger');
         model.login();
-        if(model.state.currentUser.userName !== ""){
+       // if(model.state.currentUser.userName !== ""){
             window.location.assign("#/questions");
-        }
+        //}
     }
 }
 

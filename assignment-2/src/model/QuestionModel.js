@@ -1,4 +1,8 @@
 import {EventEmitter} from "events"
+import RestClient from "../rest/RestClient";
+import model from "./UserModel";
+
+
 
 class QuestionModel extends EventEmitter{
     constructor() {
@@ -29,22 +33,58 @@ class QuestionModel extends EventEmitter{
         };
     }
 
+    loadQuestions(){
+        const client = new RestClient(model.state.newUser.userName, model.state.newUser.password);
+        return client.loadAllQuestions().then(questions => {
+            this.state = {
+                ...this.state,
+                questions: questions
+            };
+            this.emit("change",this.state);
+
+        })
+    }  
+
+    searchQuestionsByTitle(){
+        const client = new RestClient(model.state.newUser.userName, model.state.newUser.password);
+        return client.searchQuestionsByTitle(this.state.searchTagOrTitle).then(questions => {
+            this.state = {
+                ...this.state,
+                questions: questions
+            };
+            this.emit("change",this.state);
+        })
+    }
+
+    searchQuestionByTag(){
+        const client = new RestClient(model.state.newUser.userName, model.state.newUser.password);
+        return client.searchQuestionByTag(this.state.searchTagOrTitle).then(questions => {
+            this.state = {
+                ...this.state,
+                questions: questions
+            };
+            this.emit("change",this.state);
+        })
+    }
+
     addQuestion(title,text, author, tags){
-        let tagsArray = tags.split(" ");
+        const client = new RestClient(model.state.newUser.userName, model.state.newUser.password);
+        const question = {
+            id: 0,
+            author: author,
+            title: title,
+            text: text,
+            creation_date_time: Date.now(),
+            tags: tags
+        };
+        client.addQuestion(question);
+        const questions = this.state.questions;
         this.state = {
             ...this.state,
-            questions: this.state.questions.concat([{
-                id: this.state.currentId,
-                title: title,
-                text: text,
-                author: author,
-                creation_date_time: 2019,
-                tags: tagsArray
-            }]),
-            currentId: this.state.currentId+1
+            questions: questions.concat(question)
         };
-        
-        this.emit("change",this.state);
+        this.emit("change",this.state);////whyy doesn't it update?
+
     }
     removeQuestion(index) {
         this.state = {

@@ -4,6 +4,7 @@ import SmartUserList from './view/SmartUserList';
 
 import {HashRouter, Switch, Route} from "react-router-dom";
 import SmartQuestionList from './view/SmartQuestionList';
+import SmartQuestionDetails from './view/SmartQuestionDetails';
 
 const App = () => (
   <div className="App">
@@ -28,6 +29,7 @@ const App = () => (
     <Switch>
       <Route exact={true} component={SmartUserList} path="/"/>
       <Route exact={true} component={SmartQuestionList} path="/questions"/>
+      <Route exact={true} component={SmartQuestionDetails} path="/question/:index" />
     </Switch>
   </HashRouter>
     

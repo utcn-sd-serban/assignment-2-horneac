@@ -18,6 +18,7 @@ export default class SmartQuestionList extends Component{
         ))
         this.listener = modelState => this.setState(mapModelStateToComponentState(modelState));
         questionModel.addListener("change",this.listener);
+        questionListPresenter.onInit();
 
     }
 
@@ -35,6 +36,7 @@ export default class SmartQuestionList extends Component{
             onSearchTag={questionListPresenter.onClickSearchTag}
             questions={this.state.questions}
             onLogOut={questionListPresenter.onLogOut}
+            onClick={questionListPresenter.onClick}
             newQuestion={this.state.newQuestion}/>
         )
     }
