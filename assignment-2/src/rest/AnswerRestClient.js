@@ -63,4 +63,39 @@ export default class AnswerRestClient {
             }
         });
     }
+
+    voteUp(answerId, username) {
+        return fetch(BASE_URL + "/answers/vote?answerId=" + answerId + "&username=" + username + "&vote=up", {
+            method: "POST",
+            headers: {
+                Authorization: this.authorization
+            }
+        }).then(response => {
+            if (!response.ok) return false;
+            else return response.json();
+        });
+    }
+    voteDown(answerId, username) {
+        return fetch(BASE_URL + "/answers/vote?answerId=" + answerId + "&username=" + username + "&vote=down", {
+            method: "POST",
+            headers: {
+                Authorization: this.authorization
+            }
+        }).then(response => {
+            if (!response.ok) return false;
+            else return response.json();
+        });
+    }
+
+    getVoteCount(id) {
+        return fetch(BASE_URL + "/answers/vote?id=" + id, {
+            method: "GET",
+            headers: {
+                Authorization: this.authorization
+            }
+        }).then(response => {
+            if (!response.ok) return false;
+            else return response.json();
+        });
+    }
 }

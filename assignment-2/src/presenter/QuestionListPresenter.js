@@ -58,6 +58,18 @@ class QuestionListPresenter {
     onInit() {
         questionModel.loadQuestions();
     }
+
+    onVoteUp(question) {
+        if (model.state.newUser.userName !== question.author) {
+            questionModel.voteUp(question.id, model.state.newUser.userName);
+        }
+    }
+
+    onVoteDown(question) {
+        if (model.state.newUser.userName !== question.author) {
+            questionModel.voteDown(question.id, model.state.newUser.userName);
+        }
+    }
 }
 
 const questionListPresenter = new QuestionListPresenter();

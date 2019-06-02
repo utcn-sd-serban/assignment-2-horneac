@@ -4,6 +4,7 @@ import QuestionDetails from "./question/QuestionDetails";
 import answerModel from "../model/AnswerModel.js";
 import questionDetailsPresenter from "../presenter/QuestionDetailsPresenter.js";
 import model from "../model/UserModel.js";
+import questionListPresenter from "../presenter/QuestionListPresenter.js";
 
 const mapModelStateToComponentState = (modelState, answerModelState, props) => ({
     question: answerModel.state.question,
@@ -28,7 +29,7 @@ export default class SmartQuestionDetails extends Component {
     }
 
     ccomponentWillUnmount() {
-        questionModel.removeListener("change", this.listener);
+        answerModel.removeListener("change", this.listener);
     }
 
     componentDidMount() {
@@ -52,6 +53,10 @@ export default class SmartQuestionDetails extends Component {
                 currentUser={model.state.newUser}
                 editAnswer={questionDetailsPresenter.onUpdateAnswer}
                 onDelete={questionDetailsPresenter.onDelete}
+                questionVoteDown={questionListPresenter.onVoteDown}
+                questionVoteUp={questionListPresenter.onVoteUp}
+                voteUp={questionDetailsPresenter.onVoteUp}
+                voteDown={questionDetailsPresenter.onVoteDown}
             />
         );
     }

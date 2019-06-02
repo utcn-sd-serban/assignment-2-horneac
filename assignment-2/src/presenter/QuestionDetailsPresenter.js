@@ -47,6 +47,18 @@ class QuestionDetailsPresenter {
             answer.creation_date_time
         );
     }
+
+    onVoteUp(question) {
+        if (model.state.newUser.userName !== question.author) {
+            answerModel.voteUp(question.id, model.state.newUser.userName);
+        }
+    }
+
+    onVoteDown(question) {
+        if (model.state.newUser.userName !== question.author) {
+            answerModel.voteDown(question.id, model.state.newUser.userName);
+        }
+    }
 }
 
 const questionDetailsPresenter = new QuestionDetailsPresenter();

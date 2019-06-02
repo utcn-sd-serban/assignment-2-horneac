@@ -10,6 +10,10 @@ const QuestionDetails = ({
     onChangeNewAnswerProperty,
     onLogOut,
     onBack,
+    questionVoteUp,
+    questionVoteDown,
+    voteUp,
+    voteDown,
     onClickNewAnswer,
     onEdit,
     onCancel,
@@ -18,14 +22,20 @@ const QuestionDetails = ({
 }) => (
     <div>
         <h2 className="title primary"> Question</h2>
-        <QuestionTile question={question} onClick={() => {}} clasName="tile is-child box notification is-primary" />
+        <QuestionTile
+            question={question}
+            voteDown={questionVoteDown}
+            voteUp={questionVoteUp}
+            onClick={() => {}}
+            clasName="tile is-child box notification is-primary"
+        />
 
         <h2 className="title primary"> Answers </h2>
         <div className="tile is-ancestor">
             <div className="tile is-12 is-vertical is-parent">
                 {answers.map(answer => (
                     <div>
-                        <QuestionTile question={answer} onClick={() => {}} />
+                        <QuestionTile question={answer} voteDown={voteDown} voteUp={voteUp} onClick={() => {}} />
 
                         <button
                             type="button"
@@ -37,6 +47,8 @@ const QuestionDetails = ({
                         >
                             Edit Answer
                         </button>
+                        <br />
+                        <br />
                         <div className={answer.id === selectedAnswer ? "modal is-active" : "modal"}>
                             <div className="modal-background" />
                             <div className="modal-card">

@@ -99,6 +99,43 @@ class AnswerModel extends EventEmitter {
             }
         }
     }
+    getVoteCount(id) {
+        return model
+            .getAnswerClient()
+            .getVoteCount(id)
+            .then(response => {
+                this.updateVoteCount(id, response.count);
+                this.emit("change", this.state);
+            });
+    }
+
+    voteUp(id, userName) {
+        return model
+            .getAnswerClient()
+            .voteUp(id, userName)
+            .then(() => {
+                this.getVoteCount(id);
+                this.emit("change", this.state);
+            });
+    }
+
+    voteDown(id, userName) {
+        return model
+            .getAnswerClient()
+            .voteDown(id, userName)
+            .then(() => {
+                this.getVoteCount(id);
+                this.emit("change", this.state);
+            });
+    }
+
+    updateVoteCount(id, voteCount) {
+        for (let index = 0; index < this.state.answers.length; index++) {
+            if (this.state.answers[index].id === id) {
+                this.state.answers[index].voteCount = voteCount;
+            }
+        }
+    }
 }
 
 const answerModel = new AnswerModel();

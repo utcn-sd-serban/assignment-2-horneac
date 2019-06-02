@@ -53,4 +53,39 @@ export default class RestClient {
             else return response.json();
         });
     }
+
+    voteUp(questionId, username) {
+        return fetch(BASE_URL + "/questions/vote?questionId=" + questionId + "&username=" + username + "&vote=up", {
+            method: "POST",
+            headers: {
+                Authorization: this.authorization
+            }
+        }).then(response => {
+            if (!response.ok) return false;
+            else return response.json();
+        });
+    }
+    voteDown(questionId, username) {
+        return fetch(BASE_URL + "/questions/vote?questionId=" + questionId + "&username=" + username + "&vote=down", {
+            method: "POST",
+            headers: {
+                Authorization: this.authorization
+            }
+        }).then(response => {
+            if (!response.ok) return false;
+            else return response.json();
+        });
+    }
+
+    getVoteCount(id) {
+        return fetch(BASE_URL + "/questions/vote?id=" + id, {
+            method: "GET",
+            headers: {
+                Authorization: this.authorization
+            }
+        }).then(response => {
+            if (!response.ok) return false;
+            else return response.json();
+        });
+    }
 }

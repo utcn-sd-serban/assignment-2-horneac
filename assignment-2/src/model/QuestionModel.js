@@ -42,7 +42,6 @@ class QuestionModel extends EventEmitter {
                     ...this.state,
                     questions: questions
                 };
-
                 this.emit("change", this.state);
             });
     }
@@ -113,15 +112,6 @@ class QuestionModel extends EventEmitter {
         this.emit("change", this.state);
     }
 
-    filter(filterFun) {
-        this.state = {
-            ...this.state,
-            questions: this.state.questions.filter(filterFun)
-        };
-        console.log(this.state.questions);
-        this.emit("change", this.state);
-    }
-
     updateQuestions(questions) {
         this.state = {
             ...this.state,
@@ -137,6 +127,60 @@ class QuestionModel extends EventEmitter {
         };
         console.log("new search criteria:" + this.state.searchTagOrTitle);
         this.emit("change", this.state);
+    }
+
+    voteUp(id, userName) {
+        return model
+            .getClient()
+            .voteUp(id, userName)
+            .then(() => {
+                this.getVoteCount(id);
+                this.emit("change", this.state);
+            });
+    }
+
+    voteDown(id, userName) {
+        return model
+            .getClient()
+            .voteDown(id, userName)
+            .then(() => {
+                this.getVoteCount(id);
+                this.emit("change", this.state);
+            });
+    }
+
+    getVoteCount(id) {
+        return model
+            .getClient()
+            .getVoteCount(id)
+            .then(response => {
+                this.updateVoteCount(id, response.count);
+                this.emit("change", this.state);
+            });
+    }
+
+    updateVoteCount(id, voteCount) {
+        for (let index = 0; index < this.state.questions.length; index++) {
+            if (this.state.questions[index].id === id) {
+                this.state.questions[index].voteCount = voteCount;
+            }
+        }
+    }
+
+    modelVoteUp(id) {
+        for (let index = 0; index < this.state.questions.length; index++) {
+            if (this.state.questions[index].id === id) {
+                this.state.questions[index].voteCount = this.state.questions[index].count + 1;
+            }
+        }
+    }
+
+    modelVoteDown(id) {
+        for (let index = 0; index < this.state.questions.length; index++) {
+            if (this.state.questions[index].id === id) {
+                this.state.questions[index].voteCount = this.state.questions[index].count - 1;
+            }
+        }
     }
 }
 

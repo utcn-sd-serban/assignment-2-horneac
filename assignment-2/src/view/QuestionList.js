@@ -12,6 +12,8 @@ const QuestionList = ({
     onClick,
     onSearchTag,
     tagOrTitle,
+    voteUp,
+    voteDown,
     onSearchBarChange,
     onClickNewQuestion
 }) => (
@@ -54,6 +56,8 @@ const QuestionList = ({
                             question={question}
                             onClick={() => onClick(question)}
                             key={question.id}
+                            voteUp={voteUp}
+                            voteDown={voteDown}
                         />
                     ))
                 )}
