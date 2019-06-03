@@ -81,18 +81,20 @@ class QuestionModel extends EventEmitter {
             creation_date_time: Date.now(),
             tags: tags
         };
-        return model
-            .getClient()
-            .addQuestion(question)
-            .then(fetchedQuestion => {
-                const questions = this.state.questions;
-                this.state = {
-                    ...this.state,
-                    questions: [fetchedQuestion].concat(questions)
-                };
-                this.emit("change", this.state);
-            });
+        return model.getClient().addQuestion(question);
+        //.then(fetchedQuestion => this.appendQuestion(fetchedQuestion) );
     }
+
+    appendQuestion(question) {
+        console.log("got question" + question);
+        const questions = this.state.questions;
+        this.state = {
+            ...this.state,
+            questions: [question].concat(questions)
+        };
+        this.emit("change", this.state);
+    }
+
     removeQuestion(index) {
         this.state = {
             ...this.state
@@ -130,23 +132,19 @@ class QuestionModel extends EventEmitter {
     }
 
     voteUp(id, userName) {
-        return model
-            .getClient()
-            .voteUp(id, userName)
-            .then(() => {
-                this.getVoteCount(id);
-                this.emit("change", this.state);
-            });
+        return model.getClient().voteUp(id, userName);
+        // .then(() => {
+        //     this.getVoteCount(id);
+        //     this.emit("change", this.state);
+        // });
     }
 
     voteDown(id, userName) {
-        return model
-            .getClient()
-            .voteDown(id, userName)
-            .then(() => {
-                this.getVoteCount(id);
-                this.emit("change", this.state);
-            });
+        return model.getClient().voteDown(id, userName);
+        // .then(() => {
+        //     this.getVoteCount(id);
+        //     this.emit("change", this.state);
+        // });
     }
 
     getVoteCount(id) {
@@ -163,6 +161,8 @@ class QuestionModel extends EventEmitter {
         for (let index = 0; index < this.state.questions.length; index++) {
             if (this.state.questions[index].id === id) {
                 this.state.questions[index].voteCount = voteCount;
+                this.emit("change", this.state);
+                return;
             }
         }
     }

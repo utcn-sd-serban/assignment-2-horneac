@@ -29,16 +29,16 @@ class AnswerModel extends EventEmitter {
     }
 
     addAnswer(author, text, questionId) {
-        return model
-            .getAnswerClient()
-            .addAnswer(author, text, questionId)
-            .then(answer => {
-                this.state = {
-                    ...this.state,
-                    answers: [answer].concat(...this.state.answers)
-                };
-                this.emit("change", this.state);
-            });
+        return model.getAnswerClient().addAnswer(author, text, questionId);
+        // .then(answer => );
+    }
+
+    appendAnswer(answer) {
+        this.state = {
+            ...this.state,
+            answers: [answer].concat(...this.state.answers)
+        };
+        this.emit("change", this.state);
     }
 
     changeSelectedAnswer(id) {
@@ -74,28 +74,25 @@ class AnswerModel extends EventEmitter {
     }
 
     updateAnswer(id, userName, text, questionId, creation_date_time) {
-        return model
-            .getAnswerClient()
-            .editAnswer(id, userName, text, questionId, creation_date_time)
-            .then(answer => {
-                this.replaceAnswer(answer);
-                this.emit("change", this.state);
-            });
+        return model.getAnswerClient().editAnswer(id, userName, text, questionId, creation_date_time);
+        // .then(answer => {
+        //     this.replaceAnswer(answer);
+        //     this.emit("change", this.state);
+        // });
     }
 
     delete(id) {
-        return model
-            .getAnswerClient()
-            .deleteAnswer(id)
-            .then(() => {
-                this.loadAnswersOfQuestion(this.state.question.id);
-            });
+        return model.getAnswerClient().deleteAnswer(id);
+        // .then(() => {
+        //     this.loadAnswersOfQuestion(this.state.question.id);
+        // });
     }
 
     replaceAnswer(answer) {
         for (let index = 0; index < this.state.answers.length; index++) {
             if (this.state.answers[index].id === answer.id) {
                 this.state.answers[index] = answer;
+                this.emit("change", this.state);
             }
         }
     }
@@ -110,23 +107,19 @@ class AnswerModel extends EventEmitter {
     }
 
     voteUp(id, userName) {
-        return model
-            .getAnswerClient()
-            .voteUp(id, userName)
-            .then(() => {
-                this.getVoteCount(id);
-                this.emit("change", this.state);
-            });
+        return model.getAnswerClient().voteUp(id, userName);
+        // .then(() => {
+        //     this.getVoteCount(id);
+        //     this.emit("change", this.state);
+        // });
     }
 
     voteDown(id, userName) {
-        return model
-            .getAnswerClient()
-            .voteDown(id, userName)
-            .then(() => {
-                this.getVoteCount(id);
-                this.emit("change", this.state);
-            });
+        return model.getAnswerClient().voteDown(id, userName);
+        // .then(() => {
+        //     this.getVoteCount(id);
+        //     this.emit("change", this.state);
+        // });
     }
 
     updateVoteCount(id, voteCount) {
